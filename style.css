@@ -1,0 +1,54 @@
+body {
+  background: #1e1e2f;
+  color: #fff;
+  font-family: 'Comic Sans MS', cursive;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  padding: 20px;
+  max-width: 90%;
+  margin: auto;
+}
+
+h1 {
+  font-size: 6vw;
+  margin-bottom: 20px;
+}
+
+img {
+  width: 70vw;
+  max-width: 300px;
+  height: auto;
+  border-radius: 10px;
+  margin: 20px 0;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+button {
+  background-color: #ff4b5c;
+  border: none;
+  padding: 12px 25px;
+  font-size: 5vw;
+  max-width: 90%;
+  border-radius: 8px;
+  cursor: pointer;
+  color: white;
+  margin-top: 20px;
+}
+
+button:hover {
+  background-color: #ff6b7c;
+}
+
+#roastText {
+  font-size: 5vw;
+  margin-top: 20px;
+}
