@@ -5,12 +5,14 @@ body {
   text-align: center;
   margin: 0;
   padding: 0;
+  position: relative;
 }
 
 .container {
   padding: 20px;
   max-width: 90%;
   margin: auto;
+  position: relative;
 }
 
 h1 {
@@ -25,6 +27,7 @@ img {
   border-radius: 10px;
   margin: 20px 0;
   animation: spin 2s linear infinite;
+  transition: all 0.3s ease;
 }
 
 @keyframes spin {
@@ -42,13 +45,55 @@ button {
   cursor: pointer;
   color: white;
   margin-top: 20px;
+  transition: background-color 0.3s ease, transform 0.1s ease;
 }
 
 button:hover {
   background-color: #ff6b7c;
+  transform: scale(1.05);
 }
 
 #roastText {
   font-size: 5vw;
   margin-top: 20px;
+  min-height: 60px;
+}
+
+#roastText.animate {
+  animation: roastPop 0.4s ease-out;
+}
+
+@keyframes roastPop {
+  0% { transform: scale(0.5); opacity: 0; }
+  60% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+#roastText.burning {
+  color: orange;
+  text-shadow: 0 0 10px red, 0 0 20px yellow;
+  animation: shake 0.3s infinite;
+}
+
+@keyframes shake {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(2px, -2px); }
+  50% { transform: translate(-2px, 2px); }
+  75% { transform: translate(2px, 2px); }
+  100% { transform: translate(-2px, -2px); }
+}
+
+#score {
+  font-size: 4vw;
+  margin-top: 10px;
+}
+
+#memeDance {
+  width: 200px;
+  display: none;
+  margin: 10px auto;
+}
+
+audio {
+  display: none;
 }
