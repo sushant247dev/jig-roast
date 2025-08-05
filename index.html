@@ -4,19 +4,33 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Roast Jigyanshu 🤡</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
     <h1>Jigyanshu 🤡</h1>
+
+    <!-- Main image -->
     <img src="jig.jpg.jpg" id="roastImage" alt="Roast Target" />
+
     <p id="roastText">Click the button to roast him 👇</p>
     <button id="roastButton">Roast</button>
-    <audio id="bgMusic" loop>
+    <p id="score">Roast Level: 0</p>
+
+    <!-- Background Music -->
+    <audio id="bgMusic" preload="auto" loop>
       <source src="Chikni Chameli.mp3" type="audio/mpeg" />
       Your browser does not support the audio tag.
     </audio>
+
+    <!-- Sound Effects -->
+    <audio id="soundBruh" src="bruh.mp3"></audio>
+    <audio id="soundSlap" src="slap.mp3"></audio>
+    <audio id="soundHorn" src="airhorn.mp3"></audio>
   </div>
+
+  <!-- Confetti Library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
