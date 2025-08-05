@@ -3,7 +3,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const roastText = document.getElementById("roastText");
   const roastImage = document.getElementById("roastImage");
   const bgMusic = document.getElementById("bgMusic");
-  const memeDance = document.getElementById("memeDance");
   const scoreDisplay = document.getElementById("score");
 
   const soundEffects = [
@@ -16,73 +15,79 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const allRoasts = [
     chakkaRoast,
+    "Jigyanshu, tu roast nahi, tohast hai 🤡",
     "Tu itna boring hai, Netflix bhi tujhe 'Skip Intro' bol deta 📺⏩",
     "Tera sense of humor toh Windows 98 jaisa hai — outdated aur crash-prone 💾💥",
     "Tu vo typo hai jo autocorrect bhi ignore karta hai 🤖❌",
-    "Jigyanshu, tu roast nahi, tohast hai 🤡",
-    "Tu jitna slow hai, lagta hai dial-up se train karta hai 🚂📞",
-    "Jigyanshu: Lagta hai download incomplete ho gaya tha 😂",
-    "Tujhe dekhke lagta hai Photoshop bhi resign kar de 🎨🧼",
-    "Tu vo bug hai jo developer fix karne se pehle hi burnout ho jaata hai 🐞🔥",
-    "Tera existence ek April Fool’s joke lagta hai — har din 🤡📆",
-    "Tere dimaag mein RAM kam aur virus zyada hai 🧠🦠",
-    "Google bhi tujhe search nahi karta 🔍🚫",
-    "Tu roast nahi, evolution ka April Fool hai 🐒💀"
+    "Tujhe dekhke lagta hai Photoshop bhi resign kar de 🎨🧼"
   ];
 
-  let unusedRoasts = allRoasts.slice(1);
-  let roastCount = 0;
+  let unusedRoasts = allRoasts.slice(1); // skip chakka
   let firstRoastDone = false;
+  let roastCount = 0;
+  let typingInterval = null;
+  let isTyping = false;
 
   function typeRoast(text, el) {
+    if (isTyping && typingInterval) clearInterval(typingInterval);
+    isTyping = true;
+
     let i = 0;
     el.textContent = "";
-    const interval = setInterval(() => {
-      el.textContent += text.charAt(i);
-      i++;
-      if (i >= text.length) clearInterval(interval);
+
+    typingInterval = setInterval(() => {
+      if (i < text.length) {
+        el.textContent += text.charAt(i);
+        i++;
+      } else {
+        clearInterval(typingInterval);
+        isTyping = false;
+      }
     }, 35);
   }
 
   roastButton.addEventListener("click", () => {
-    roastCount++;
+    if (isTyping) return;
 
-    // 🎵 Instant music playback
-    if (bgMusic.paused) {
-      bgMusic.currentTime = 65;
-      bgMusic.volume = 1.0;
-      bgMusic.play().catch(e => console.warn("Autoplay blocked:", e));
-    }
-
-    // 🎉 Confetti
-    confetti({ particleCount: 100, spread: 90, origin: { y: 0.6 } });
-
-    // 🔥 Get next roast
-    let randomRoast = "";
+    // Get Roast
+    let roastLine = "";
 
     if (!firstRoastDone) {
-      randomRoast = chakkaRoast;
+      roastLine = chakkaRoast;
       firstRoastDone = true;
     } else {
       if (unusedRoasts.length === 0) unusedRoasts = allRoasts.slice(1);
       const index = Math.floor(Math.random() * unusedRoasts.length);
-      randomRoast = unusedRoasts.splice(index, 1)[0];
+      roastLine = unusedRoasts.splice(index, 1)[0];
     }
 
-    // 🔥 Animate roast text
+    // Roast Animation
     roastText.classList.remove("animate", "burning");
     void roastText.offsetWidth;
     roastText.classList.add("animate", "burning");
+    typeRoast(roastLine, roastText);
 
-    // ✍️ Type roast
-    typeRoast(randomRoast, roastText);
+    // Music
+    if (bgMusic.paused) {
+      bgMusic.currentTime = 65;
+      bgMusic.volume = 0.1;
+      bgMusic.play().then(() => {
+        let vol = 0.1;
+        const fade = setInterval(() => {
+          if (vol < 1) {
+            vol += 0.05;
+            bgMusic.volume = Math.min(vol, 1);
+          } else {
+            clearInterval(fade);
+          }
+        }, 50);
+      }).catch(e => console.warn("Autoplay blocked:", e));
+    }
 
-    // 🔁 Title blink
-    const originalTitle = document.title;
-    document.title = "🔥 Roasted Jigyanshu 🔥";
-    setTimeout(() => document.title = originalTitle, 2000);
+    // Confetti
+    confetti({ particleCount: 100, spread: 90, origin: { y: 0.6 } });
 
-    // ⚡ Glitch effect
+    // Glitch image
     roastImage.style.filter = "invert(1) hue-rotate(90deg)";
     roastImage.style.transform = "scale(1.2)";
     setTimeout(() => {
@@ -90,18 +95,20 @@ document.addEventListener("DOMContentLoaded", function () {
       roastImage.style.transform = "scale(1)";
     }, 500);
 
-    // 🔊 Meme sound
+    // Sound
     const sound = soundEffects[Math.floor(Math.random() * soundEffects.length)];
     sound.currentTime = 0;
     sound.play();
 
-    // 🕺 Meme dance gif
-    memeDance.style.display = "block";
+    // Title change
+    const originalTitle = document.title;
+    document.title = "🔥 Roasted Jigyanshu 🔥";
     setTimeout(() => {
-      memeDance.style.display = "none";
-    }, 3000);
+      document.title = originalTitle;
+    }, 2000);
 
-    // 📈 Update roast score
+    // Update Score
+    roastCount++;
     scoreDisplay.textContent = "Roast Level: " + roastCount;
   });
 });
