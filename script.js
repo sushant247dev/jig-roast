@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("soundHorn")
   ];
 
-  const chakkaRoast = "Muummy: Ladka hua ya ladki? Doctor: Chakka hua hai 🧬😵";
+  const chakkaRoast = "Mummy: Ladka hua ya ladki? Doctor: Chakka hua hai 🧬😵";
 
   const allRoasts = [
     chakkaRoast,
@@ -112,3 +112,4 @@ document.addEventListener("DOMContentLoaded", function () {
     scoreDisplay.textContent = "Roast Level: " + roastCount;
   });
 });
+
